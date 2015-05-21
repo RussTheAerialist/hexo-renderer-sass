@@ -3,6 +3,7 @@ var extend = require('util')._extend;
 
 var sassRenderer = function(data, options) {
 
+  try {
   // support global and theme-specific config
   var userConfig = extend(
     hexo.theme.config.node_sass || {},
@@ -16,7 +17,6 @@ var sassRenderer = function(data, options) {
     sourceComments: false,
   }, userConfig);
 
-  try {
     // node-sass result object:
     // https://github.com/sass/node-sass#result-object
     var result = sass.renderSync(config);
@@ -29,5 +29,5 @@ var sassRenderer = function(data, options) {
 }
 
 // associate the Sass renderer with .scss AND .sass extensions
-hexo.extend.renderer.register('scss', 'css', sassRenderer);
-hexo.extend.renderer.register('sass', 'css', sassRenderer);
+hexo.extend.renderer.register('scss', 'css', sassRenderer, true);
+hexo.extend.renderer.register('sass', 'css', sassRenderer, true);
